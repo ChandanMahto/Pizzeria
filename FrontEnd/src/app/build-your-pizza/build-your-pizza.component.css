@@ -1,0 +1,21 @@
+.table{
+    width: 50%;
+    border: 1px solid lightgray;
+}
+.table tr td,b{
+    padding-left: 30px;
+}
+.total{
+    color: blue;
+}
+.buildpizza{
+   margin-left: 280px;
+   margin-top: 12px;
+   margin-bottom: 8px;
+   background-color: black;
+   color: orange;
+   border: none;
+   height: 29px;
+   border-radius: 3px;
+   padding:5px;
+}

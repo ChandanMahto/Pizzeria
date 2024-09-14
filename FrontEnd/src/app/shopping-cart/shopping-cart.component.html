@@ -1,0 +1,72 @@
+<ng-container *ngIf="cartData?.length != 0">
+    <div class="container">
+        <div class="card-table">
+            <div class="cart-product" style="margin-left: 100px;">
+                <table class="table table-responsive table-hover" style="margin-left: 100px; text-align: center;">
+                    <thead>
+                        <tr>
+                            <th>Sr. No</th>
+                            <th>Product Name</th>
+                            <th>Product Image</th>
+                            <th>Customized Toppings</th>
+                            <th>Toppings Cost</th>
+                            <th>Price</th>                            
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of cartData; let i = index">
+                            <td>{{ i+1 }}</td>
+                            <td>{{ item.name }}</td>
+                            <td><img  src="{{ item.image }}" alt="item.name" style="height:50px;width:50px"></td>
+                            <td class="addtocart" *ngIf="item.ingName!=null;else add">{{ item.ingName }} <br>
+                                <button class="btn btn-default" style="background-color: orange;" type="submit" (click)="removeToppings(item.Id,item.ingId,item.ingName,item.ingPrice,item.ingTotalPrice)">Remove Toppings</button>
+                            </td>
+                            <ng-template #add>
+                                <button type="submit" class="btn btn-default" style="background-color: orange;" routerLink="/buildyourpizza">Add Extra Toppings</button>
+                              </ng-template>
+                              <td *ngIf="item.ingTotalPrice!=null;else blank">₹ {{item.ingTotalPrice}}</td>
+                              <ng-template #blank>
+                                <td> &nbsp;0 &nbsp;</td>
+                              </ng-template>
+                            <td >{{ item.price }}</td>
+                            <td >
+                                <button  class="btn btn-danger" (click)="minusQuantity(item)"><i class="glyphicon glyphicon-minus"></i></button>
+                                {{ item.qty }}
+                                <button  class="btn btn-success" (click)="addQuantity(item)"><i class="glyphicon glyphicon-plus"></i></button>
+                            </td>
+                            <td >₹ {{ item.qty*item.price }}</td>
+                            <td>
+                                <button (click)="removeItem(item.Id)" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6"></td>
+                            <!--td><button (click)="emptyCart()" class="btn btn-danger">Empty Cart</button></td-->
+                            <td><button routerLink="/orderpizza" class="btn btn-primary">Shop More</button></td>
+                            <td><button class="btn btn-success" routerLink="/checkout">Checkout</button></td>
+                            <td><strong>Grand Total: ₹ {{ grandTotal }}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</ng-container>
+
+
+<ng-container *ngIf="cartData?.length == 0">
+    <div class="container">
+        <div class="card">
+            <h5 class="card-title">My Cart</h5>
+        </div>
+        <div class="center">
+            <img src="https://rukminim1.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90" alt="">
+            <h4>Your cart is empty!</h4>
+            <h6>Add item to it now</h6>
+            <button routerLink="/orderpizza" class="btn btn-primary">Shop Now</button>
+        </div>
+    </div>
+</ng-container>

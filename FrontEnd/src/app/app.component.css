@@ -1,0 +1,12 @@
+.navbar-brand-name{
+    font-size: large;
+    display: flex;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+    color: whitesmoke;
+}
+.position{
+    position: fixed;
+}

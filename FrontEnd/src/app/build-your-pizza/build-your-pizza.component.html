@@ -1,0 +1,25 @@
+<div align="center">
+    <table class="table" border="solid">
+        
+        <tr *ngFor="let ingredients of ingredients">
+            <td><img src="{{ingredients.image}}" height="100px" width="100px"></td>
+            <td [id]="ingredients.tname" #name><b>{{ingredients.tname}}  &nbsp;&nbsp;&nbsp;&nbsp;
+            <b style="float: right; margin-right: 55px;">{{ingredients.price | currency:'INR'}}</b></b></td>
+            <td>
+                <form>
+                    <input type="checkbox" #box
+                    [id]="ingredients._id" [checked]="isChecked" [value]="ingredients.price"
+                    (change)="updatePrice($event,ingredients.id,ingredients.tname,ingredients.price,ingredients)"/>
+                    <label class="form-check-label " [for]="ingredients._id" style="color: orange; font-weight:500">&nbsp;&nbsp;&nbsp;&nbsp; Add</label>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+            <h4><b class="total" id="total">Total Cost :₹ {{total}}</b><br></h4>
+            <button class="buildpizza" routerLink="/cart" (click)="addIngredientsPriceToCart()">Build Ur Pizza</button>
+            </td>
+        </tr>
+    
+    </table>
+</div>

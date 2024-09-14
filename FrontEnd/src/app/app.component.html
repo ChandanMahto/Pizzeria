@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <a class="navbar-brand-name" href="#">Pizzeria</a>
+    <img src="./assets/PizzeriaLogo.png" alt="PizzeriaLogo" style="height: 50px; width: 70px;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size: medium;">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/orderpizza">Order Pizza </a>
+        </li>
+        <li class="nav-item" style="margin-left: 20px;">
+          <a class="nav-link" routerLink="/buildyourpizza">Build Your Pizza</a>
+        </li>
+        
+      </ul>
+      <!--form class="form-inline my-2 my-lg-0">
+        <img src="./assets/Shoppingcart-11-icon.png" alt="cart" style="height: 50px;width: 50px;">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" routerLink="cart">Cart</button>
+      </form-->
+      <form class="navbar-form navbar-right">
+        <button class="btn btn-default" type="submit" style="background-color: orange;" [routerLink]="['/cart']">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-cart"
+            viewBox="0 0 16 16">
+            <path
+              d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+          </svg>
+          <span class='badge badge-warning' id='lblCartCount'>{{itemsInCart}}</span>
+          Shopping Cart
+        </button>
+      </form>
+    </div>
+  </nav>
+<router-outlet></router-outlet>
+  <footer class="bg-light text-center text-white">
+    <!-- Grid container -->
+   <!-- <div class="container p-4 pb-0">
+       Section: Form -->
+      
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2); font-size: medium;">
+      © 2022 Copyright:
+      <a class="text-white" routerLink="">pizzeria.com</a> &nbsp;
+      All Rights Reserved
+    </div>
+    <!-- Copyright -->
+  </footer>
+</body>
+</html>
