@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart.service';
 import { PizzaService } from '../pizza.service';
+import { forkJoin, take } from 'rxjs';
 
 @Component({
   selector: 'app-order-pizza',
@@ -11,18 +12,26 @@ export class OrderPizzaComponent implements OnInit {
   pizzas:any;
   cartData:any;
   pizzaCheck:boolean=false;
+  isError = false;
   constructor(private pizzaService:PizzaService,private cartService:CartService) { }
 
   ngOnInit(): void {
-    this.pizzaService.getPizza().subscribe((data)=>{
-      this.pizzas=data;
-      this.pizzas.forEach(function(element:any){
-        element.qty=1;
-      })
+    const getPizza$ = this.pizzaService.getPizza();
+    const getCart$ = this.cartService.getCart();
+    forkJoin([getPizza$,getCart$]).pipe(take(1)).subscribe({
+      next: ([pizzaData,cartData])=>{
+        this.isError = false;
+        this.pizzas=pizzaData;
+        this.pizzas.forEach(function(element:any){
+          element.qty=1;
+        })
+        this.cartData=cartData;
+      },
+      error: ()=>{
+        this.isError = true;
+      }
     })
-    this.cartService.getCart().subscribe((data)=>{
-      this.cartData=data;
-    })
+
     this.checkCart();
   }
 

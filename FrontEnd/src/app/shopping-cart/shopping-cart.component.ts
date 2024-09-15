@@ -28,7 +28,6 @@ export class ShoppingCartComponent implements OnInit {
       console.log(this.ingredientsTotal+" viola "+this.ingP+"  "+this.cartData);
       if(this.counter==0){
         this.counter++;
-        this.ngOnInit();
       }
       
       // this.cartData.forEach((item:any)=>{
@@ -90,10 +89,12 @@ export class ShoppingCartComponent implements OnInit {
     
     //this.grandTotal-=this.total;
     //this.totalPrice.emit(this.grandTotal);
-    this.cartService.minusQuantity(item.Id).subscribe(()=>{
-      this.updatePrice()
-    });
-    location.reload();
+    if(item.qty>1){
+      this.cartService.minusQuantity(item.Id).subscribe(()=>{
+        this.updatePrice()
+      });
+      location.reload();
+    }
     //location.search;
   }
 

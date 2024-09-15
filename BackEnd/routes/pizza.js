@@ -1,25 +1,36 @@
 var express = require('express');
 var router = express.Router();
-const assert=require("assert");
+// const assert=require("assert");
+var cors = require('cors')
+var app = express()
+
+app.use(cors())
 /* GET home page. */
 const pipeline=[{
     $project:{documentKey:false}
 }]
-
+var dbase;
 const mClient=require('mongodb').MongoClient;
 const dbUrl="mongodb://localhost:27017";
 const dName="Pizzeria";
 mClient.connect(dbUrl,(err,connection)=>{
     if(err) console.log("failed to connect db");
     else{
-        db=connection.db(dName);
+        dbase=connection.db(dName);
         console.log("Connection to db established");
     }
 })
 
+// const MongoClient = require('mongodb').MongoClient;
+// var dbase;
+
+// MongoClient.connect("mongodb://localhost:27017/Pizzeria",(err,database)=>{
+//     dbase = database;
+// })
+
 router.get('/orderpizza',(req,res)=>{
     console.log("Hello again");
-    db.collection('pizza').find().toArray((err,data)=>{
+    dbase.collection('pizza').find().toArray((err,data)=>{
         if(err) console.log("error while fetching the file");
         else{
            res.send(data); 
@@ -30,7 +41,7 @@ router.get('/orderpizza',(req,res)=>{
 
 router.get('/buildyourpizza',(req,res)=>{
     console.log("Hello again....");
-    db.collection('ingredients').find().toArray((err,data)=>{
+    dbase.collection('ingredients').find().toArray((err,data)=>{
         if(err) console.log("error while fetching the file");
         else{
            res.send(data); 
@@ -42,7 +53,7 @@ router.get('/buildyourpizza',(req,res)=>{
 
 router.post('/addToCart',(req,res)=>{
     console.log("Adding to cart....");
-    db.collection('cart').insertOne(req.body,(err,result)=>{
+    dbase.collection('cart').insertOne(req.body,(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else res.send("data added successfully");
     })
@@ -54,7 +65,7 @@ router.post('/addIngredientsToCart',(req,res)=>{
     console.log("Adding Ingredients to cart...."+data);
    // db.collection('cart').updateMany({}, {$set:{"ingId":12,"ingName":"hello","ingPrice":123}},{upsert:false,multi:true})
 
-    db.collection('cart').updateMany({}, {$push:{"ingId":data.id,"ingName":data.name,"ingPrice":data.price}},{multi:true},(err,result)=>{
+   dbase.collection('cart').updateMany({}, {$push:{"ingId":data.id,"ingName":data.name,"ingPrice":data.price}},{multi:true},(err,result)=>{
     //db.collection('cart').updateMany(req.body,{$set:{ingId:req.body.ingId}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
@@ -74,7 +85,7 @@ router.post('/addIngredientsPriceToCart',(req,res)=>{
     console.log("Adding Ingredients to cart....$$$"+data);
    // db.collection('cart').updateMany({}, {$set:{"ingId":12,"ingName":"hello","ingPrice":123}},{upsert:false,multi:true})
 
-    db.collection('cart').updateMany({}, {$set:{"ingTotalPrice":data.ingPrice}},{multi:true},(err,result)=>{
+   dbase.collection('cart').updateMany({}, {$set:{"ingTotalPrice":data.ingPrice}},{multi:true},(err,result)=>{
     //db.collection('cart').updateMany(req.body,{$set:{ingId:req.body.ingId}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
@@ -94,7 +105,7 @@ router.post('/deleteIngredientsFromCart',(req,res)=>{
     console.log("Delete Ingredients to cart...."+data);
    // db.collection('cart').updateMany({}, {$set:{"ingId":12,"ingName":"hello","ingPrice":123}},{upsert:false,multi:true})
 
-    db.collection('cart').updateMany({Id:data.Id}, {$unset:{"ingId":1,"ingName":1,"ingPrice":1,"ingTotalPrice":1}},{multi:true},(err,result)=>{
+   dbase.collection('cart').updateMany({Id:data.Id}, {$unset:{"ingId":1,"ingName":1,"ingPrice":1,"ingTotalPrice":1}},{multi:true},(err,result)=>{
     //db.collection('cart').updateMany(req.body,{$set:{ingId:req.body.ingId}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
@@ -111,7 +122,7 @@ router.post('/deleteIngredientsFromCart',(req,res)=>{
 
 router.get('/cart',(req,res)=>{
     console.log("Getting Cart....");
-    db.collection('cart').find().toArray((err,data)=>{
+    dbase.collection('cart').find().toArray((err,data)=>{
         if(err) console.log("error while fetching the file");
         else{
            res.send(data); 
@@ -122,7 +133,7 @@ router.get('/cart',(req,res)=>{
 
 router.post('/addQuantity',(req,res)=>{
     console.log("Adding to cart....");
-    db.collection('cart').updateOne(req.body,{$inc:{qty:1}},(err,result)=>{
+    dbase.collection('cart').updateOne(req.body,{$inc:{qty:1}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else res.send("data added successfully");
     })
@@ -130,7 +141,7 @@ router.post('/addQuantity',(req,res)=>{
 
 router.post('/minusQuantity',(req,res)=>{
     console.log("Removing....");
-    db.collection('cart').updateOne(req.body,{$inc:{qty:-1}},(err,result)=>{
+    dbase.collection('cart').updateOne(req.body,{$inc:{qty:-1}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else res.send("operation  successfully");
     })
@@ -138,7 +149,7 @@ router.post('/minusQuantity',(req,res)=>{
 
 router.post('/remove',(req,res)=>{
     console.log("Remove from cart...."+req.body);
-    db.collection('cart').deleteOne(req.body,(err,result)=>{
+    dbase.collection('cart').deleteOne(req.body,(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
            res.send("data deleted successfully"); 
@@ -152,7 +163,7 @@ router.post('/addCart',(req,res)=>{
     var data=req.body;
     console.log("Adding Ingredients to cart...."+(data.ingId));
 
-    db.collection('cart').updateMany({}, {$push:{"ingId":data.ingId,"ingName":data.ingName}},{multi:true},(err,result)=>{
+    dbase.collection('cart').updateMany({}, {$push:{"ingId":data.ingId,"ingName":data.ingName}},{multi:true},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
            res.send("data added successfully"); 
@@ -176,13 +187,13 @@ router.post('/addCart',(req,res)=>{
 // })
 
 
-router.get('/', function(req, res, next) {
-  res.send('pizza');
-});
-router.get('/orderpizza', function(req, res, next) {
-    res.send('Orderpizza');
-  });
-  router.get('/buildyourpizza', function(req, res, next) {
-    res.send('Buildpizza');
-  });
+// router.get('/', function(req, res, next) {
+//   res.send('pizza');
+// });
+// router.get('/orderpizza', function(req, res, next) {
+//     res.send('Orderpizza');
+//   });
+//   router.get('/buildyourpizza', function(req, res, next) {
+//     res.send('Buildpizza');
+//   });
 module.exports = router;

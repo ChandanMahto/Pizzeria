@@ -1,6 +1,7 @@
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { CartService } from '../cart.service';
 import { IngredientsService } from '../ingredients.service';
+import { forkJoin, take } from 'rxjs';
 
 @Component({
   selector: 'app-build-your-pizza',
@@ -13,21 +14,26 @@ export class BuildYourPizzaComponent implements OnInit {
   checkData:any=[];
   checkedIngredients:any=[];
   cartData:any;
-  total:number=0;
-  isChecked:boolean=false;
+  total=0;
+  isChecked=false;
+  isError = false
   constructor(private ingredientsService:IngredientsService,private cartService:CartService) { }
 
   ngOnInit(): void {
-    this.ingredientsService.getIngredients().subscribe((data)=>{
-      this.ingredients=data;
-      console.log(data);
-      
-      this.ingredients.forEach((element:any)=>{
-          element.checked=false;
-      })
-    })
-    this.cartService.getCart().subscribe((data)=>{
-      this.cartData=data;
+    const getIngredients$ = this.ingredientsService.getIngredients();
+    const getCart$ = this.cartService.getCart();
+    forkJoin([getIngredients$,getCart$]).pipe(take(1)).subscribe({
+      next: ([ingredientsData,cartData])=>{
+        this.isError = false;
+        this.ingredients=ingredientsData;        
+        this.ingredients.forEach((element:any)=>{
+            element.checked=false;
+        })
+        this.cartData=cartData;
+      },
+      error: ()=>{
+        this.isError = true;
+      }
     })
   }
 
