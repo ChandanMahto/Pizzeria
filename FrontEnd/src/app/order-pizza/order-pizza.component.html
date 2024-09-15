@@ -1,84 +1,40 @@
-<!--div style="text-align: center;  color: darkred;height: auto;"-->
-    <!--section>
-        <section *ngFor="let pizza of pizzas" style="height: 250px;width: 155px; float: left;margin: 10px;border: solid 1px;background-color: darkturquoise;">
-            <p>{{pizza.name}}</p>
-            <img src="{{pizza.image}}" style="height: 180px;width: 150px;margin-left: 0px;">
-            <p style="height: 50px;width:150px">{{pizza.type}}{{pizza.price}}</p>
-        </section>
-    </section>
-    <section>
-    <div class="row">
-      <div *ngFor="let presentation of pizzas" class="col-6 card">
-          <img class="card-img-top" src="{{presentation.image}}" alt="Card image cap">
-          <div class="card-block">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum modi autem quod accusantium veritatis non odit, dignissimos ab quidem quaerat numquam placeat. Repellat, expedita neque! Iste delectus sed nemo facilis!
+  <div *ngIf="isError; else orderPizza" style = "display: flex; justify-content: center;">
+    <img src="../../assets/oops-something-went-wrong-large.png" alt="something went wrong">
+  </div>
+  <ng-template #orderPizza>
+    <div class="responsive" style="margin-top:30px; padding-bottom: 200px;">
+      <div class="block">
+        <div class="block-main" *ngFor="let pizza of pizzas">
+          <div class="block-main1">
+            <div class="name" [id]="pizza.name" #name>{{pizza.name}}</div><br>
+            <div class="type">
+              <div class='box green' *ngIf="pizza.type=='veg' else elsecondition"></div>
+              <ng-template #elsecondition>
+                <div class='box red'></div>
+              </ng-template>
+            </div><br>
+            <div class="price" [id]="pizza.price" #price><b>{{pizza.price | currency:'INR'}}</b></div>
           </div>
-      </div>
-  </div>
-</section-->
-<!--div class="container d-flex py-1 flex-wrap" style="  display: inline-block;">
-<div class="card col-6 card " style="width: 15rem; margin-bottom: 20px;margin-right: auto;border-bottom: 1px solid gray; border-right: 1px solid grey;" *ngFor="let p of pizzas">
-  <div class="table table-border" style="display: flex;">
-  <img class="card-img-top" src="{{p.image}}" alt="Card image cap" style="height: 300px; width: 300px; border-right: 0.1px  grey; border-style: groove;">
-  <div>
-  <h5 class="card-body card-title">Ingredients</h5>
-  <p class="card-body card-text">{{p.ingredients}}</p>
-  <hr>
-  <h5 class="card-body card-title">Toppings</h5>
-    <p class="card-body card-text">{{p.topping}}</p>
-  </div>
-  
-  </div>
-  <hr>
-  <div class="card-body">
-    <h5 class="card-title">{{p.name}}</h5>
-    <p class="card-text">{{p.description}}</p>
-  </div>
-  <ul class="list-group list-group-flush">
-     <li class="list-group-item" *ngIf="p.type==='nonveg';"> Pizza Type : <span class="glyphicon glyphicon-record" style="color: red;"></span></li>
-     <li class="list-group-item" *ngIf="p.type==='veg';"> Pizza Type : <span class="glyphicon glyphicon-record" style="color: green;"></span></li>
-    
-    <li class="list-group-item">Price: ₹ {{p.price}}</li>
-  </ul>
-  <div class="card-body">
-    <button class="card-link" (click)="addToCart(p._id,p.name,p.price,p.description,p.image);" type="button">Add to Cart</button>
-    <!-- <a class="card-link" (click)="addToCart(p.ingredients,p.name,p.price,p.description,p.image);">Add to Cart</a> -->
-  <!--/div>
-</div>
-</div>
-</div-->
-<div class="responsive" style="margin-top:30px; padding-bottom: 200px;">
-  <div class="block">
-    <div class="block-main" *ngFor="let pizza of pizzas">
-      <div class="block-main1">
-        <div class="name" [id]="pizza.name" #name>{{pizza.name}}</div><br>
-        <div class="type">
-          <div class='box green' *ngIf="pizza.type=='veg' else elsecondition"></div>
-          <ng-template #elsecondition>
-            <div class='box red'></div>
-          </ng-template>
-        </div><br>
-        <div class="price" [id]="pizza.price" #price><b>{{pizza.price | currency:'INR'}}</b></div>
-      </div>
-      <div class="block-main1">
-        <div class="description" [id]="pizza.description" #description align="justify">{{pizza.description}}</div><br>
-        <div class="ingredients" [id]="pizza._id" #ingredients align="justify"><b>Ingredients :
-          </b>{{pizza.ingredients}}</div><br>
-        <div class="topping"><b align="justify">Toppings : </b>{{pizza.topping}}</div>
-      </div>
-      <div class="block-main1">
-        <div class="image" [id]="pizza.image" #image>
-          <img src="{{pizza.image}}" height="130px" width="135px">
-        </div>
-        <div class="addtocart"><button type="button" class="btn btn-warning" *ngIf="pizzaCheck==false;else show"
-            (click)="addToCart(ingredients.id,name.id,price.id,description.id,image.id);">Add to Cart</button>
-            <ng-template #show>
-              <button type="submit" [disabled]="true">Add to Cart</button>
-            </ng-template>
-          
+          <div class="block-main1">
+            <div class="description" [id]="pizza.description" #description align="justify">{{pizza.description}}</div><br>
+            <div class="ingredients" [id]="pizza._id" #ingredients align="justify"><b>Ingredients :
+              </b>{{pizza.ingredients}}</div><br>
+            <div class="topping"><b align="justify">Toppings : </b>{{pizza.topping}}</div>
           </div>
-            
+          <div class="block-main1">
+            <div class="image" [id]="pizza.image" #image>
+              <img src="{{pizza.image}}" height="130px" width="135px">
+            </div>
+            <div class="addtocart"><button type="button" class="btn btn-warning" *ngIf="pizzaCheck==false;else show"
+                (click)="addToCart(ingredients.id,name.id,price.id,description.id,image.id);">Add to Cart</button>
+                <ng-template #show>
+                  <button type="submit" [disabled]="true">Add to Cart</button>
+                </ng-template>
+              
+              </div>
+                
+            </div>
         </div>
-    </div>
-  </div>
-</div>  
+      </div>
+    </div>  
+  </ng-template>

@@ -1,4 +1,4 @@
-<ng-container *ngIf="cartData?.length != 0">
+<ng-container *ngIf="cartData?.length !== 0; else noItem">
     <div class="container">
         <div class="card-table">
             <div class="cart-product" style="margin-left: 100px;">
@@ -33,7 +33,7 @@
                               </ng-template>
                             <td >{{ item.price }}</td>
                             <td >
-                                <button  class="btn btn-danger" (click)="minusQuantity(item)"><i class="glyphicon glyphicon-minus"></i></button>
+                                <button  class="btn btn-danger" [disabled]="item.qty === 1" (click)="minusQuantity(item)"><i class="glyphicon glyphicon-minus"></i></button>
                                 {{ item.qty }}
                                 <button  class="btn btn-success" (click)="addQuantity(item)"><i class="glyphicon glyphicon-plus"></i></button>
                             </td>
@@ -56,8 +56,7 @@
     </div>
 </ng-container>
 
-
-<ng-container *ngIf="cartData?.length == 0">
+<ng-template #noItem>
     <div class="container">
         <div class="card">
             <h5 class="card-title">My Cart</h5>
@@ -69,4 +68,4 @@
             <button routerLink="/orderpizza" class="btn btn-primary">Shop Now</button>
         </div>
     </div>
-</ng-container>
+</ng-template>
