@@ -3,7 +3,7 @@ var router = express.Router();
 // const assert=require("assert");
 var cors = require('cors')
 var app = express()
-
+require('dotenv').config();
 app.use(cors())
 /* GET home page. */
 const pipeline=[{
@@ -11,9 +11,17 @@ const pipeline=[{
 }]
 var dbase;
 const mClient=require('mongodb').MongoClient;
-const dbUrl="mongodb://localhost:27017";
+const dbUrl=process.env.dbUrl;
+const { MongoClient, ServerApiVersion } = require('mongodb');
+
 const dName="Pizzeria";
-mClient.connect(dbUrl,(err,connection)=>{
+MongoClient.connect(dbUrl,{
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }},
+(err,connection)=>{
     if(err) console.log("failed to connect db");
     else{
         dbase=connection.db(dName);

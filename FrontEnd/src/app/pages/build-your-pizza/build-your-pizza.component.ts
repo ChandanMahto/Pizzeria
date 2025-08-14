@@ -1,6 +1,6 @@
 import { Component, OnInit,Output,EventEmitter } from '@angular/core';
-import { CartService } from '../cart.service';
-import { IngredientsService } from '../ingredients.service';
+import { CartService } from '../../services/cart.service';
+import { IngredientsService } from '../../services/ingredients.service';
 import { forkJoin, take } from 'rxjs';
 
 @Component({
