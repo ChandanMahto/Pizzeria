@@ -2,13 +2,17 @@
     <img src="../../assets/oops-something-went-wrong-large.png" alt="something went wrong">
   </div>
 <ng-template #buildPizza>
-    <div align="center">
+    <div class="container-fluid table-responsive-lg">
         <table class="table" border="solid">
             
             <tr *ngFor="let ingredients of ingredients">
                 <td><img src="{{ingredients.image}}" height="100px" width="100px"></td>
-                <td [id]="ingredients.tname" #name><b>{{ingredients.tname}}  &nbsp;&nbsp;&nbsp;&nbsp;
-                <b style="float: right; margin-right: 55px;">{{ingredients.price | currency:'INR'}}</b></b></td>
+                <td [id]="ingredients.tname" #name>
+                    <div class="d-flex justify-content-between">
+                        <b>{{ingredients.tname}}</b>
+                    <b style="float: right; margin-right: 55px;">{{ingredients.price | currency:'INR'}}</b>
+                    </div>
+            </td>
                 <td>
                     <form>
                         <input type="checkbox" #box

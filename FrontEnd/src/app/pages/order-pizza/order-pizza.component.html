@@ -2,10 +2,10 @@
     <img src="../../assets/oops-something-went-wrong-large.png" alt="something went wrong">
   </div>
   <ng-template #orderPizza>
-    <div class="responsive" style="margin-top:30px; padding-bottom: 200px;">
-      <div class="block">
-        <div class="block-main" *ngFor="let pizza of pizzas">
-          <div class="block-main1">
+    <div class="container-fluid" style="margin-top:30px; padding-bottom: 200px;">
+      <div class="row justify-content-center">
+        <div class="block-main col-xs-12 col-sm-6 col-md-4 flex-wrap flex-xl-nowrap" *ngFor="let pizza of pizzas">
+          <div class="block-main1 order-2 order-xl-1">
             <div class="name" [id]="pizza.name" #name>{{pizza.name}}</div><br>
             <div class="type">
               <div class='box green' *ngIf="pizza.type=='veg' else elsecondition"></div>
@@ -15,15 +15,15 @@
             </div><br>
             <div class="price" [id]="pizza.price" #price><b>{{pizza.price | currency:'INR'}}</b></div>
           </div>
-          <div class="block-main1">
+          <div class="block-main1 order-3 order-xl-2">
             <div class="description" [id]="pizza.description" #description align="justify">{{pizza.description}}</div><br>
             <div class="ingredients" [id]="pizza._id" #ingredients align="justify"><b>Ingredients :
               </b>{{pizza.ingredients}}</div><br>
             <div class="topping"><b align="justify">Toppings : </b>{{pizza.topping}}</div>
           </div>
-          <div class="block-main1">
+          <div class="block-main1 order-1 order-xl-3">
             <div class="image" [id]="pizza.image" #image>
-              <img src="{{pizza.image}}" height="130px" width="135px">
+              <img src="{{pizza.image}}" height="120px" width="120px">
             </div>
             <div class="addtocart"><button type="button" class="btn btn-warning" *ngIf="pizzaCheck==false;else show"
                 (click)="addToCart(ingredients.id,name.id,price.id,description.id,image.id);">Add to Cart</button>

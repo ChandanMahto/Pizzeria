@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../cart.service';
-import { PizzaService } from '../pizza.service';
+import { CartService } from '../../services/cart.service';
+import { PizzaService } from '../../services/pizza.service';
 import { forkJoin, take } from 'rxjs';
 
 @Component({
@@ -22,7 +22,7 @@ export class OrderPizzaComponent implements OnInit {
       next: ([pizzaData,cartData])=>{
         this.isError = false;
         this.pizzas=pizzaData;
-        this.pizzas.forEach(function(element:any){
+        this.pizzas?.forEach(function(element:any){
           element.qty=1;
         })
         this.cartData=cartData;
@@ -36,7 +36,7 @@ export class OrderPizzaComponent implements OnInit {
   }
 
   checkCart(){
-    this.cartData.forEach((item:any)=>{
+    this.cartData?.forEach((item:any)=>{
       if(item.pizzaCheck==true) this.pizzaCheck=true;
     })
   }
