@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment";
 
-const BASE_URL = environment.production? '' : 'http://localhost:3000';
+const BASE_URL = environment.production ? '' : 'http://localhost:3000';
 
 export const PIZZA_URL = BASE_URL + '/pizza';
 export const ADD_TO_CART_URL = PIZZA_URL + '/addToCart';

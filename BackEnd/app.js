@@ -41,11 +41,11 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-app.use(express.static(path.join(__dirname, '../Frontend/dist/front-end')));
+app.use(express.static(path.join(__dirname, '../FrontEnd/dist/front-end')));
 
 // Catch-all: send back Angular's index.html for client-side routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/dist/front-end/index.html'));
+  res.sendFile(path.join(__dirname, '../FrontEnd/dist/front-end/index.html'));
 });
 
 // error handler
