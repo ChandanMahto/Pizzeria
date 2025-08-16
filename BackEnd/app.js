@@ -43,6 +43,9 @@ app.use(function(req, res, next) {
 
 app.use(express.static(path.join(__dirname, '../FrontEnd/dist/front-end')));
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../FrontEnd/dist/front-end/index.html'));
+});
 // Catch-all: send back Angular's index.html for client-side routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../FrontEnd/dist/front-end/index.html'));
