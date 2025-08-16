@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ADD_QUANTITY_CART_URL, CART_URL, DELETE_INGREDIENTS, REMOVE_CART_URL, REMOVE_QUANTITY_CART_URL } from '../constants/url';
 
 @Injectable({
   providedIn: 'root'
@@ -9,26 +10,25 @@ export class CartService {
   total:number=0;
   constructor(private http:HttpClient) { }
   getCart(){
-    this.cartData="http://localhost:3000/pizza/cart";
-    return this.http.get("http://localhost:3000/pizza/cart");
+    return this.http.get(CART_URL)
   }
   removeItem(id:string){
     const data={Id:id};
     console.log(data);
     
-    return this.http.post("http://localhost:3000/pizza/remove",data);
+    return this.http.post(REMOVE_CART_URL,data);
   }
   addQuantity(id:string){
     const data={Id:id};
     console.log(data);
     
-    return this.http.post("http://localhost:3000/pizza/addQuantity",data);
+    return this.http.post(ADD_QUANTITY_CART_URL,data);
   }
   minusQuantity(id:string){
     const data={Id:id};
     console.log(data);
     
-    return this.http.post("http://localhost:3000/pizza/minusQuantity",data);
+    return this.http.post(REMOVE_QUANTITY_CART_URL,data);
   }
   getTotal():number{
     for(let items of this.cartData){
@@ -42,6 +42,6 @@ export class CartService {
     const data={Id:Id,ingId:id,ingName:name,ingPrice:price,ingTotalPrice:total};
     console.log(data);
     
-    return this.http.post("http://localhost:3000/pizza/deleteIngredientsFromCart",data);
+    return this.http.post(DELETE_INGREDIENTS,data);
   }
 }
