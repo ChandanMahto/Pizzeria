@@ -16,6 +16,8 @@ var pizzaRouter = require('./routes/pizza');
 
 var app = express();
 const cors=require('cors');
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
 
 // view engine setupf
 app.use(cors());
@@ -57,5 +59,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen();
+app.listen(PORT,()=>{
+  console.log("listening to",PORT);
+});
 module.exports = app;

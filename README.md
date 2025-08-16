@@ -4,7 +4,7 @@ The application I developed when I was going through the training back in 2022. 
 
 Honestly, I don't even remember, why I created few methods or why I took some approach. There are few approach which are beginner. If you will go through the code you will also feel the same. I am trying to change few approaches whenever I get some time. If you are following this, and feel that some change can be done, feel free to do so, or drop a request.
 
-NOTE:- you might see many consoles or commented lines. Those will be completly removed, once the application is almost stable. It's an ongoing process, please have some patience and ignore them
+NOTE:- I have to be honest, this is not my best work, but this is my first ever work. you might see many consoles or commented lines. Those will be completly removed, once the application is almost stable. It's an ongoing process, please have some patience and ignore them
 
 
 
