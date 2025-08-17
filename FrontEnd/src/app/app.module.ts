@@ -9,6 +9,7 @@ import { PizzaService } from './services/pizza.service';
 import { BuildYourPizzaComponent } from './pages/build-your-pizza/build-your-pizza.component';
 import { ShoppingCartComponent } from './pages/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { NavBarComponent } from './components/navbar.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
     OrderPizzaComponent,
     BuildYourPizzaComponent,
     ShoppingCartComponent,
-    CheckoutComponent
+    CheckoutComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,5 +13,6 @@ export const CART_URL = PIZZA_URL + '/cart';
 export const REMOVE_CART_URL = PIZZA_URL + '/remove';
 export const ADD_QUANTITY_CART_URL = PIZZA_URL + '/addQuantity';
 export const REMOVE_QUANTITY_CART_URL = PIZZA_URL + '/minusQuantity';
+export const REMOVE_ALL_CART_URL = PIZZA_URL + '/removeAll';
 
 

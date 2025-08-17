@@ -9,15 +9,7 @@ import { CartService } from './services/cart.service';
 export class AppComponent {
   title = 'FrontEnd';
   cartData:any;
-  itemsInCart:number=0;
-  constructor(private cartService:CartService){
-    cartService.getCart().subscribe((data)=>{
-      this.cartData=data;
-      this.cartData.forEach(()=>{
-        this.itemsInCart++;
-      })
-    })
-    
+  constructor(){
   }
   
 }
