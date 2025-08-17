@@ -2,6 +2,7 @@ import { Component, OnInit,Output,EventEmitter } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { IngredientsService } from '../../services/ingredients.service';
 import { forkJoin, take } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-build-your-pizza',
@@ -17,7 +18,7 @@ export class BuildYourPizzaComponent implements OnInit {
   total=0;
   isChecked=false;
   isError = false
-  constructor(private ingredientsService:IngredientsService,private cartService:CartService) { }
+  constructor(private ingredientsService:IngredientsService,private cartService:CartService,private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const getIngredients$ = this.ingredientsService.getIngredients();
@@ -64,18 +65,33 @@ export class BuildYourPizzaComponent implements OnInit {
 
   addIngredientsPriceToCart(){
     console.log(this.checkedIngredients);
-    this.price()
-      this.checkedIngredients.forEach((item:any)=>{
+    const ingredientRequests = this.checkedIngredients.map((item: any) => 
+  this.ingredientsService.addIngredientsToCart(item.id, item.name)
+);
+
+forkJoin([
+  this.price(),
+  ...ingredientRequests
+]).subscribe(([priceResult, ...ingredientResults]) => {
+  console.log('Price result:', priceResult);
+  console.log('Ingredients added:', ingredientResults);
+  this.router.navigate(['/cart'],{
+    relativeTo: this.route
+  })
+});
+
+    // forkJoin([this.price(),
+    //   this.checkedIngredients.forEach((item:any)=>{
         
-        this.ingredientsService.addIngredientsToCart(item.id,item.name).subscribe();
-      })
+    //     this.ingredientsService.addIngredientsToCart(item.id,item.name);
+    //   })]).subscribe();
       //location.reload();
     }
 
     price(){
       console.log(this.total);
       
-      this.ingredientsService.addIngredientsPriceToCart(this.total).subscribe();
+      return this.ingredientsService.addIngredientsPriceToCart(this.total);
     }
     
  
