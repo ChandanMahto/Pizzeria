@@ -166,6 +166,23 @@ router.post('/remove',(req,res)=>{
     })
 });
 
+router.post('/removeAll',async (req,res)=>{
+    const data = req.body;
+    console.log(data);
+
+    try {
+    const query = { Id: { $in: data } };
+    console.log("Running deleteMany with:", query);
+     await dbase.collection('cart').deleteMany(query);
+
+    res.json({ message: "All data deleted successfully" });
+  } catch (err) {
+    console.error("Error while deleting all:", err);
+    res.status(500).json({ error: "Error while deleting items" });
+  }
+
+});
+
 
 router.post('/addCart',(req,res)=>{
     var data=req.body;

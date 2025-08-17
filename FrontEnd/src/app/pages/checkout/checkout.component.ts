@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CheckoutComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cartService: CartService,private router: Router) { }
 
   ngOnInit(): void {
+    this.cartService.removeAll().pipe(take(1)).subscribe(()=>{
+      console.log("Order placed. All items removed from cart");
+
+    });
+  }
+
+  clickBack(): void {
+    this.router.navigate(['/'])
   }
 
 }
