@@ -36,19 +36,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/users', usersRouter);
 app.use('/pizza',pizzaRouter);
 app.use('/addToCart',pizzaRouter);
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
 
 app.use(express.static(path.join(__dirname, '../FrontEnd/dist/front-end')));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../FrontEnd/dist/front-end/index.html'));
-});
 // Catch-all: send back Angular's index.html for client-side routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../FrontEnd/dist/front-end/index.html'));
+});
+
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
 });
 
 // error handler
