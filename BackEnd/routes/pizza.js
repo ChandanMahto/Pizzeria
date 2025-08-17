@@ -63,7 +63,7 @@ router.post('/addToCart',(req,res)=>{
     console.log("Adding to cart....");
     dbase.collection('cart').insertOne(req.body,(err,result)=>{
         if(err) console.log("error while inserting"+err);
-        else res.send("data added successfully");
+        else res.json({message:"data added successfully"});
     })
 });
 
@@ -77,7 +77,7 @@ router.post('/addIngredientsToCart',(req,res)=>{
     //db.collection('cart').updateMany(req.body,{$set:{ingId:req.body.ingId}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
-           res.send("data added successfully"); 
+           res.json({message:"data added successfully"}); 
            console.log(req.body);
         } 
     })
@@ -97,7 +97,7 @@ router.post('/addIngredientsPriceToCart',(req,res)=>{
     //db.collection('cart').updateMany(req.body,{$set:{ingId:req.body.ingId}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
-           res.send("data added successfully"); 
+           res.json({message:"data added successfully"}); 
            console.log(req.body);
         } 
     })
@@ -143,7 +143,7 @@ router.post('/addQuantity',(req,res)=>{
     console.log("Adding to cart....");
     dbase.collection('cart').updateOne(req.body,{$inc:{qty:1}},(err,result)=>{
         if(err) console.log("error while inserting"+err);
-        else res.send("data added successfully");
+        else res.json({message:"data added successfully"});
     })
 });
 
@@ -191,7 +191,7 @@ router.post('/addCart',(req,res)=>{
     dbase.collection('cart').updateMany({}, {$push:{"ingId":data.ingId,"ingName":data.ingName}},{multi:true},(err,result)=>{
         if(err) console.log("error while inserting"+err);
         else{
-           res.send("data added successfully"); 
+           res.json({message:"data added successfully"}); 
            console.log(req.body);
         } 
     })

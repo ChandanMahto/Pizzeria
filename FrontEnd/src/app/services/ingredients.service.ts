@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { identifierName } from '@angular/compiler';
 import { Injectable } from '@angular/core';
-import { ADD_INGREDIENTS, CART_URL, DELETE_INGREDIENTS, INGREDIENTS } from '../constants/url';
+import { ADD_CART_URL, ADD_INGREDIENTS, CART_URL, DELETE_INGREDIENTS, INGREDIENTS } from '../constants/url';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +29,7 @@ export class IngredientsService {
   //  })
   //   console.log(items.name+" "+items.id+" "+items.price+" "+items.value+" "+this.item);
   //   return this.hi;
-    return this.http.post(CART_URL,data); 
+    return this.http.post(ADD_CART_URL,data); 
   }
   addIngredientsPriceToCart(price:number){
     const data={ingPrice:price};
