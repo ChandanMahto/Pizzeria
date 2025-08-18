@@ -1,4 +1,4 @@
-  <div *ngIf="isError; else orderPizza" style = "display: flex; justify-content: center;">
+  <!-- <div *ngIf="isError; else orderPizza" style = "display: flex; justify-content: center;">
     <img src="../../assets/oops-something-went-wrong-large.png" alt="something went wrong">
   </div>
   <ng-template #orderPizza>
@@ -37,4 +37,43 @@
         </div>
       </div>
     </div>  
+  </ng-template> -->
+
+<div *ngIf="isError; else orderPizza" style = "display: flex; justify-content: center;">
+    <img src="../../assets/oops-something-went-wrong-large.png" alt="something went wrong">
+  </div>
+  <ng-template #orderPizza>
+
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4  row-cols-xxl-6 g-6">
+  <div class="col" *ngFor="let pizza of pizzas; let i = index">
+    <div class="card h-100">
+      <img src="{{ pizza.image }}" class="card-img-top img-fixed" alt="...">
+      <div class="card-body d-flex flex-column" #body>
+        <div class="d-flex flex-wrap justify-content-between card-title p-2" [ngClass]="pizza.type=='veg' ? 'bg-success' : 'bg-danger'" style="min-height: 60px;">
+          <h5>{{ pizza.name }}</h5>
+          <h6>{{ pizza.price | currency:'INR'}}</h6>
+        </div>
+        <div class="card-text d-flex flex-column">
+          <div class="description"  #description>{{pizza.description}}</div>
+            <div class="row flex-grow-1" #ingredients>
+              <div class="col-4 ">
+                <b>Ingredients :</b>
+              </div>
+              <div class="col-8"> {{pizza.ingredients}} </div>
+              
+            </div>
+            <div class="row flex-grow-1">
+              <div class="col-4">
+                <b>Toppings :</b>
+              </div>
+              <div class="col-8"> {{pizza.topping}} </div>
+            </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <small class="text-body-secondary">Last updated 3 mins ago</small>
+      </div>
+    </div>
+  </div>
+</div>
   </ng-template>

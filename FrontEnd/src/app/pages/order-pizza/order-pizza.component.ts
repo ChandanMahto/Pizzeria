@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { PizzaService } from '../../services/pizza.service';
 import { forkJoin, take } from 'rxjs';
@@ -9,11 +9,26 @@ import { forkJoin, take } from 'rxjs';
   styleUrls: ['./order-pizza.component.css']
 })
 export class OrderPizzaComponent implements OnInit {
+  @ViewChildren('ingredients') ingredients!: QueryList<ElementRef>;
+    @ViewChildren('toppings') toppings!: QueryList<ElementRef>;
+      @ViewChildren('body') cardBody!: QueryList<ElementRef>;
+    @ViewChildren('description') description!: QueryList<ElementRef>;
+
   pizzas:any;
   cartData:any;
   pizzaCheck:boolean=false;
   isError = false;
   constructor(private pizzaService:PizzaService,private cartService:CartService) { }
+
+
+  // ngAfterViewInit() {
+  //   setTimeout(() => {
+  //     this.adjustHeight(this.cardBody)
+  //     this.adjustHeight(this.description)
+  //     this.adjustHeight(this.ingredients)
+  //     this.adjustHeight(this.toppings)
+  //   },100);
+  // }
 
   ngOnInit(): void {
     const getPizza$ = this.pizzaService.getPizza();
@@ -53,5 +68,18 @@ export class OrderPizzaComponent implements OnInit {
     console.log(this.cartData);
     
   }
+
+  // private adjustHeight(item: QueryList<ElementRef>) {
+  //   item.forEach(itm => itm.nativeElement.style.height = 'auto');
+  //   let maxHeight =0;
+  //         item.forEach(card => {
+  //       const height = card.nativeElement.offsetHeight;
+  //       if (height > maxHeight) maxHeight = height;
+  //     });
+
+  //     item.forEach(card => {
+  //       card.nativeElement.style.height = maxHeight + 'px';
+  //     });
+  // }
   
 }
